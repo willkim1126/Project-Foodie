@@ -200,6 +200,8 @@ All the effort to reduce dimensionality of the data was worth it as the training
 
 ... Based on the evaluation metric, we can we see that our model performing horribly. Very horribly. The MSE suggest that the model has extremely large prediction errors. The RMSE is around 8201 minutes based on MSE,  which is an enormous error for predicting cooking time. The $R^2$ score of 0.00 indicates that the model performs no better than simply predicting the mean value for all samples. Moreover, it's negative, telling us that it's worse than just predicitng mean. Ultimately, this suggests the model has failed to capture any meaningful relationship between features and target.
 
+## Final Model 
+
 ### Exploring the 'minutes' column
 One of the causes of the poor performance of the model might be due to extreme outliers in the 'minutes' column. Further analysis on the data is much needed.
 
@@ -225,8 +227,8 @@ After removing the outliers from the dataset that is fed through the model, the 
 Looking at the MSE, we can see that it is significantly lower than the orginial metric. The square root (RMSE) would be about 11.2 minutes, which is a reasonable error margin for predicting cooking times. Moreover, the $R^2$ is much better than the -0.00 socre from the preivous result. $R^2$ value of  0.84 means the model explains approximately 84% of the variance in cooking times.
 
 
-## Final Model
-**I was not able to get my final model running. But Below is my explanation to the approach I wanted to take**
+## A new approach to the Final Model 
+**Though I was able to achieve a much better evalutation metrics after I got rid of outliers, I wasn't sure if that was enough to get credits for step7. So below is my attempt to create a final model including two new features of 'calories' and 'n_steps'. I was not able to finish the final model and was not able to run it. However, I hope the below show some framework and approach I was taking to achieve the final model.** 
 
 ### Two New Features 
 The new features or variables in the dataset I thought it would better the base model was: calories and n_steps. If the meal had more calories, it could mean that it will have more ingredients or have bigger portion size, leading to higher complexity of recipe, affecting the minutes. In contrast, less calories might mean less ingredients and less portion size, leading to lower complexity of recipe, affecting the minutes. Number of steps is very intuitive since it will directly influence the complexity of the recipe. 
@@ -234,4 +236,5 @@ The new features or variables in the dataset I thought it would better the base 
 ### Limitations
 Unfortunately, I was not able to run the final model without my laptop crashing. There's definitely a way to make this model work, but with the time constraint, I was not able to fit the model properly on time. 
 
-
+## Fairness Analysis
+Again, due to time constraint I was not able to run the model again and actually run the permuatation test. My approach was to divide into two groups, based on the number of steps, group X being recipes with less than 10 steps, and group y being recipes with more than 10 steps.
