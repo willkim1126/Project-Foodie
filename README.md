@@ -171,7 +171,7 @@ In other words out of 549 unique recipe tags, the hypothesis tests identified 25
 To incorporate machine learning, the next steps are related to building a predicitve model based on the recipe dataset.
 
 ### Problem Identification 
-The goal of this prediciton problem is to predict number of minutes it takes to make a recipe based on the given ingredients and tags. Based on the ingredients and tags give, the model aims to predict the complexity of the recipe. In order to quantify the defintion of 'complexity' here, column 'minutes' was used as it is intuitive to say the longer it takes, more complex the recipe is. 
+The goal of this prediciton problem is to predict number of minutes it takes to make a recipe based on the given ingredients and tags. Based on the ingredients and tags give, the model aims to predict the complexity of the recipe. In order to quantify the defintion of 'complexity' here, column 'minutes' was used as it is intuitive to say the longer it takes, more complex the recipe is. Looking at the number of ingredients, we can say that more ingredients mean its more complex to cook, affecting the response variable, minutes. Similarly, specfic tags can be related to recipe being more or less complex. 
 
 
 ## Base Model 
@@ -222,13 +222,16 @@ After removing the outliers from the dataset that is fed through the model, the 
 - **Mean Squared Error:** 125.55
 - **R² Score:** 0.84
 
-Looking at the MSE, we can see that it is significantly lower than the orginial model. The square root (RMSE) would be about 11.2 minutes, which is a reasonable error margin for predicting cooking times. Moreover, the $R^2$ is much better than the -0.00 socre from the preivous model.  $R^2$ value of  0.84 means the model explains approximately 84% of the variance in cooking times.
+Looking at the MSE, we can see that it is significantly lower than the orginial metric. The square root (RMSE) would be about 11.2 minutes, which is a reasonable error margin for predicting cooking times. Moreover, the $R^2$ is much better than the -0.00 socre from the preivous result. $R^2$ value of  0.84 means the model explains approximately 84% of the variance in cooking times.
 
 
+## Final Model
+**I was not able to get my final model running. But Below is my explanation to the approach I wanted to take**
 
+### Two New Features 
+The new features or variables in the dataset I thought it would better the base model was: calories and n_steps. If the meal had more calories, it could mean that it will have more ingredients or have bigger portion size, leading to higher complexity of recipe, affecting the minutes. In contrast, less calories might mean less ingredients and less portion size, leading to lower complexity of recipe, affecting the minutes. Number of steps is very intuitive since it will directly influence the complexity of the recipe. 
 
-
-
-
+### Limitations
+Unfortunately, I was not able to run the final model without my laptop crashing. There's definitely a way to make this model work, but with the time constraint, I was not able to fit the model properly on time. 
 
 
