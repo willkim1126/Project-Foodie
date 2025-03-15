@@ -39,10 +39,22 @@ Starting the EDA, univariate analysis done first to understand the dataset bette
 ### Distribution of Average Rating 
 
 <iframe
-  src="/Users/jhkim/Desktop/Recipe-Dataset-Project/project04/iframe_figures/figure_18.html"
+  src="assets/figure_18.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
+
+### Bivariate Analysis
+
+### Average Rating vs. Cooking Time
+<iframe
+  src="assets/figure_17.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+
 
 
