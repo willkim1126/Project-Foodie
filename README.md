@@ -24,5 +24,17 @@ In this project, columns 'minutes', 'tags', 'nutrients', 'n_steps', 'steps', 'in
 | 'ingredients' | Ingredients used in the recipe |
 
 
+## Data Cleaning and Exploratory Data Analysis 
+
+### Data Cleaning
+The provided dataset for the recipes were in two separate datasets: recipe datasets that contains recipes and ratings dataset that contains reviews and ratings submitted for the recipes in the other dataset. 
+
+Therefore, merging the two dataset was neccesary. Left merge the recipes and interactions datasets together. Then, In the merged dataset, fill all ratings of 0 with np.nan. After filling the 0s with np.nan, average rating per recipe was found, in Series, for creating a new column called 'average_rating'.
+
+It is also important to note that further data cleaning is done in the later part of the project as more analysis is done.
+
+## Univariate Analysis
+Starting the EDA, univariate analysis done first to understand the dataset better. 
+
 
 
