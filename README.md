@@ -203,6 +203,15 @@ All the effort to reduce dimensionality of the data was worth it as the training
 ### Exploring the 'minutes' column
 One of the causes of the poor performance of the model might be due to extreme outliers in the 'minutes' column. Further analysis on the data is much needed.
 
+<iframe
+  src="assets/minutes.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Look at the plot above and its x axis. By the distribution of the plot, you can clearly tell there are some insane outliers. 
+
 In order to find outliers, modified z-scores test was performed, finding 7496 outliers, based on their z-score, that was higher than 3.5.
 
 
