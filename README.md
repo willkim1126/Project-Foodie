@@ -8,10 +8,10 @@ Being a big food enthusiast, a large dataset of recipes sparked my curiosity in 
 'You are what you eat'. By analyzing the dataset that contains over 83,000 data, I aim to understand 'food' in a higher dimension. 
 
 ### Research Question
-In this project I aim to answer the question of 'How can we analyze recipes to....'
+In this project I aim to answer the question of 'How do different recipe characteristics (e.g., ingredients, cooking time, and tags) impact their healthiness?'
 
 ### About Data 
-The dataset I'm looking is the recipes dataset from food.com, where it contains neccesary information about each recipes. The dataset contain 83782 rows (83782  recipes) and 14 columns (14 variable) for each row. 
+The dataset I'm looking is the recipes dataset from food.com, where it contains necessary information about each recipes. The dataset contains 83,782 recipes, each with 14 attributes detailing cooking time, ingredients, and nutritional information.
 In this project, columns 'minutes', 'tags', 'nutrients', 'n_steps', 'steps', 'ingredients' were the main columns that were used to analyze the dataset. 
 
 | Column| Description| 
@@ -29,7 +29,7 @@ In this project, columns 'minutes', 'tags', 'nutrients', 'n_steps', 'steps', 'in
 ### Data Cleaning
 The provided dataset for the recipes were in two separate datasets: recipe datasets that contains recipes and ratings dataset that contains reviews and ratings submitted for the recipes in the other dataset. 
 
-Therefore, merging the two dataset was neccesary. Left merge the recipes and interactions datasets together. Then, In the merged dataset, fill all ratings of 0 with np.nan. After filling the 0s with np.nan, average rating per recipe was found, in Series, for creating a new column called 'average_rating'.
+Therefore, merging the two dataset was necessary. A left merge was used to ensure that all recipes remain in the dataset, even if they have no reviews. Then, In the merged dataset, fill all ratings of 0 with np.nan. After filling the 0s with np.nan, average rating per recipe was found, in Series, for creating a new column called 'average_rating'.
 
 It is also important to note that further data cleaning is done in the later part of the project as more analysis is done.
 
@@ -79,7 +79,7 @@ The results reveal:
 - **Number of steps**: Observed difference = 0.9954, p-value = 0.1840
   - Recipes missing descriptions have slightly more steps on average, but this difference is not statistically significant.
 
-These findings suggest that the missingness pattern in the description column is not completely random (MCAR) but may depend on recipe complexity as measured by ingredient count, indicating a potential Missing At Random (MAR) mechanism.
+These findings suggest that missing descriptions are associated with recipe complexity (fewer ingredients). This indicates a Missing At Random (MAR) mechanism, meaning that certain types of recipes are more likely to have missing descriptions, potentially affecting our analysis of recipe characteristics.
 
 
 ## Hypothesis Testing 
@@ -102,14 +102,14 @@ The types of recips does not affect its healthiness. Protein, sugar, and carbohy
 The type of recipe affects its healtiness. Protein, sugar and carbohydrate percent daily values depend on recipe types.
 
 ### Data Prepocessing
-In order to answer the research question, more data cleaning is required. the column 'nutrition' and 'tags' are both in string. However, they both have brackets [] inside, so changing to approriate type of list is necessary before the hypothesis test. Morever, we will dive the column 'nutrients' to different nutrient information.
+In order to answer the research question, more data cleaning is required. the column 'nutrition' and 'tags' are both in string. However, they both have brackets [] inside, so changing to appropriate type of list is necessary before the s. Morever, we will dive the column 'nutrients' to different nutrient information.
 
 
-### Undestaing the Data More
+### Understanding the Data More
 We need to further understand the dataset in order properly execture hypothesis testing. Through data wrangling, unique list of ingredients and tags in the dataset was obtained. This is will help hypothesis testing as filtering through 'healthy' recipe is needed. From this, there was 4913 healthy recipes in the dataset. 
 
 ### Determing the Type of Test
-Since we are dealing with discrete, unpaired, categorical data type 'tags', we will use chi-square test. However, there's 549 unique tags in the dataset. Perforiming indiviual hypothesis test for each tage will not only take long and inefficient, it will increase the risk of Type 1 error. 
+Since we are dealing with discrete, unpaired, categorical data type 'tags', we will use chi-square test. However, there's 549 unique tags in the dataset. Perforiming indiviual hypothesis tests for each tage will not only take long and inefficient, it will increase the risk of Type 1 error. 
 
 ### Recipe Tag Analysis: Preparing for Chi-Square Testing
 
@@ -162,9 +162,9 @@ These findings demonstrate that recipe tags serve as powerful indicators of heal
 Moreover, after filtering through recipes that only include the healthy tags, 102 recipes were found to be healthy.
 
 ### Conclusion
-Out of 549 hypothesis test, we were able to reject the null hypothesis for 256 tags which are stored in the variable 'healthy tags'.\
+Out of 549 hypothesis tests, we were able to reject the null hypothesis for 256 tags which are stored in the variable 'healthy tags'.\
 \
-In other words out of 549 unique recipe tags, the hypothesis test identified 256 tags that are statistically significant in their association with being healthy. These 256 “healthy tags” were then used to filter recipes, resulting in 102 recipes that exclusively consist of these healthy tags. This represents a small subset of over 2 million recipes analyzed.
+In other words out of 549 unique recipe tags, the hypothesis tests identified 256 tags that are statistically significant in their association with being healthy. These 256 “healthy tags” were then used to filter recipes, resulting in 102 recipes that exclusively consist of these healthy tags. This represents a small subset of over 2 million recipes analyzed.
 
 
 ## Framing a Prediction Problem 
@@ -185,7 +185,7 @@ Here, we use MultiLabelBinarizer to perform one-hot encoding on the ‘ingredien
 After, the encoded ingredients and tags are combined into a single sparse DataFrame. Using sparse representations significantly reduces memory usage for high-dimensional, sparse data.
 
 ### Pipeline
-The main pipe line of the model is as followed:\
+The main pipe line of the model is as followed:
 - SelectKBest chooses the top 1000 features based on mutual information with the target variable. This reduces dimensionality while retaining the most relevant features.
 - Principal Component Analysis (PCA) further reduces the dimensionality to 100 components. PCA finds the directions of maximum variance in the data, allowing us to represent the data with fewer dimensions while retaining most of the information.
 - StandardScaler standardizes the features by removing the mean and scaling to unit variance. This is important for many machine learning algorithms, including Random Forest, to ensure all features are on a similar scale.
