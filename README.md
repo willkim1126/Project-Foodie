@@ -39,7 +39,7 @@ Starting the EDA, univariate analysis done first to understand the dataset bette
 ### Distribution of Average Rating 
 
 <iframe
-  src="assets/figure_18.html"
+  src="assets/univariate.html"
   width="800"
   height="600"
   frameborder="0"
@@ -49,7 +49,7 @@ Starting the EDA, univariate analysis done first to understand the dataset bette
 
 ### Average Rating vs. Cooking Time
 <iframe
-  src="assets/figure_17.html"
+  src="assets/steps_vs_avg_rating.html"
   width="800"
   height="600"
   frameborder="0"
