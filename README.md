@@ -33,8 +33,16 @@ Therefore, merging the two dataset was neccesary. Left merge the recipes and int
 
 It is also important to note that further data cleaning is done in the later part of the project as more analysis is done.
 
-## Univariate Analysis
+### Univariate Analysis
 Starting the EDA, univariate analysis done first to understand the dataset better. 
 
+### Distribution of Average Rating 
+
+<iframe
+  src="/Users/jhkim/Desktop/Recipe-Dataset-Project/project04/iframe_figures/figure_18.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 
