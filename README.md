@@ -1,5 +1,5 @@
 # Project Foodie
-Name: Junghwan Kim
+Name: Junghwan Kim\
 PID: A16996831
 
 ## Introduction
