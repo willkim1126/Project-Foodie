@@ -111,6 +111,111 @@ We need to further understand the dataset in order properly execture hypothesis 
 ### Determing the Type of Test
 Since we are dealing with discrete, unpaired, categorical data type 'tags', we will use chi-square test. However, there's 549 unique tags in the dataset. Perforiming indiviual hypothesis test for each tage will not only take long and inefficient, it will increase the risk of Type 1 error. 
 
+### Recipe Tag Analysis: Preparing for Chi-Square Testing
+
+The chi-square test preparation implemented here transforms recipe tag data into a format suitable for statistical analysis of health associations. Let's break down the process:
+
+### Step 1: Converting Tags to Binary Indicators
+First, the implementation creates binary indicators for each unique tag in the dataset. Rather than working with complex tag lists, each recipe now has a series of 1s and 0s indicating whether specific tags are present or absent.
+
+### Step 2: Expanding the Dataset
+These binary indicators are then added to the original recipe dataset, preserving all initial information while incorporating the structured tag data.
+
+### Step 3: Building Contingency Tables
+For each tag, a 2×2 contingency table is constructed to examine its relationship with recipe healthiness:
+
+| Tag Presence | Healthy Recipes | Unhealthy Recipes |
+|--------------|-----------------|-------------------|
+| Tag Present  | A               | B                 |
+| Tag Absent   | C               | D                 |
+
+Where:
+- **A**: Number of healthy recipes with the tag
+- **B**: Number of unhealthy recipes with the tag
+- **C**: Number of healthy recipes without the tag
+- **D**: Number of unhealthy recipes without the tag
+
+The implementation includes safeguards to ensure all counts remain non-negative, which is essential for valid chi-square testing.
+
+These contingency tables provide the foundation for subsequent chi-square tests that will reveal which tags have statistically significant associations with recipe healthiness.
+
+### Chi-Square Analysis: Tag Association with Recipe Healthiness
+
+The chi-square analysis implemented here examines the relationship between recipe tags and healthiness classification through a systematic statistical approach:
+
+### Methodology
+- **Contingency Table Analysis**: For each tag, a 2×2 contingency table was constructed showing the distribution of healthy/unhealthy recipes with/without the tag
+- **Chi-Square Testing**: The `chi2_contingency` function calculated p-values indicating the probability that observed tag-health associations occurred by chance
+- **Multiple Testing Correction**: Bonferroni correction was applied to adjust p-values, controlling for the increased risk of false positives when conducting multiple tests
+- **Significance Filtering**: Only tags with adjusted p-values below 0.05 were retained as statistically significant
+
+### Key Findings
+- **Widespread Significance**: The analysis revealed 256 tags with statistically significant associations to recipe healthiness
+- **Extremely Strong Associations**: Many tags showed remarkably low p-values (as low as 5.63e-176 for "5-ingredients-or-less")
+- **Diverse Predictors**: Significant tags spanned various categories:
+  - Preparation complexity ("5-ingredients-or-less")
+  - Time investment ("1-day-or-more", "weeknight")
+  - Specific ingredients ("white-rice", "whole-duck")
+
+### Aftermath
+These findings demonstrate that recipe tags serve as powerful indicators of healthiness. The statistical strength of these associations suggests that certain ingredients, preparation methods, and cooking styles are systematically related to health classifications in recipes. This information could be valuable for recipe recommendation systems, nutritional analysis, or developing healthier cooking alternatives.
+Moreover, after filtering through recipes that only include the healthy tags, 102 recipes were found to be healthy.
+
+### Conclusion
+Out of 549 hypothesis test, we were able to reject the null hypothesis for 256 tags which are stored in the variable 'healthy tags'.\
+\
+In other words out of 549 unique recipe tags, the hypothesis test identified 256 tags that are statistically significant in their association with being healthy. These 256 “healthy tags” were then used to filter recipes, resulting in 102 recipes that exclusively consist of these healthy tags. This represents a small subset of over 2 million recipes analyzed.
+
+
+## Framing a Prediction Problem 
+To incorporate machine learning, the next steps are related to building a predicitve model based on the recipe dataset.
+
+### Problem Identification 
+The goal of this prediciton problem is to predict number of minutes it takes to make a recipe based on the given ingredients and tags. Based on the ingredients and tags give, the model aims to predict the complexity of the recipe. In order to quantify the defintion of 'complexity' here, column 'minutes' was used as it is intuitive to say the longer it takes, more complex the recipe is. 
+
+
+## Base Model 
+Again, the dataset needs further cleaning and preprocessing in order for model to achieve its intended purpose. 
+First, only relvant columns in recipes were used to lower the memory used in the cpu (since the model will blow up my laptop if I run the whole, raw dataset). The next few sections will provide more details in data preprocessing.
+
+### One-hot Encoding for 'Ingredients' and 'Tags' Columns
+Here, we use MultiLabelBinarizer to perform one-hot encoding on the ‘ingredients’ and ‘tags’ columns. The `sparse_output=True` parameter creates a sparse matrix, which is memory-efficient for high-dimensional data with many zero values.
+
+### Combining the Encoded Columns to the Original Dataframe
+After, the encoded ingredients and tags are combined into a single sparse DataFrame. Using sparse representations significantly reduces memory usage for high-dimensional, sparse data.
+
+### Pipeline
+The main pipe line of the model is as followed:\
+- SelectKBest chooses the top 1000 features based on mutual information with the target variable. This reduces dimensionality while retaining the most relevant features.
+- Principal Component Analysis (PCA) further reduces the dimensionality to 100 components. PCA finds the directions of maximum variance in the data, allowing us to represent the data with fewer dimensions while retaining most of the information.
+- StandardScaler standardizes the features by removing the mean and scaling to unit variance. This is important for many machine learning algorithms, including Random Forest, to ensure all features are on a similar scale.
+- The Random Forest Regressor is used for prediction. It’s an ensemble of decision trees, which is well-suited for handling non-linear relationships and interactions between features.
+
+### Fitting
+All the effort to reduce dimensionality of the data was worth it as the training was finished in around 55 minutes. The onehot encoding of over 10,000 uniqe ingredients was why it was necessary to reduce dimensionality. 
+
+### Performance
+- **Mean Squared Error:** 67260671.69
+- **R² Score:** -0.00
+
+... Based on the evaluation metric, we can we see that our model performing horribly. Very horribly. The MSE suggest that the model has extremely large prediction errors. The RMSE is around 8201 minutes based on MSE,  which is an enormous error for predicting cooking time. The $R^2$ score of 0.00 indicates that the model performs no better than simply predicting the mean value for all samples. Moreover, it's negative, telling us that it's worse than just predicitng mean. Ultimately, this suggests the model has failed to capture any meaningful relationship between features and target.
+
+### Exploring the 'minutes' column
+One of the causes of the poor performance of the model might be due to extreme outliers in the 'minutes' column. Further analysis on the data is much needed.
+
+In order to find outliers, modified z-scores test was performed, finding 7496 outliers, based on their z-score, that was higher than 3.5.
+
+
+### Running the Model Again
+After removing the outliers from the dataset that is fed through the model, the model ran quicker as well, in the range of 37 minutes. 
+
+### Revised Performance
+- **Mean Squared Error:** 125.55
+- **R² Score:** 0.84
+
+Looking at the MSE, we can see that it is significantly lower than the orginial model. The square root (RMSE) would be about 11.2 minutes, which is a reasonable error margin for predicting cooking times. Moreover, the $R^2$ is much better than the -0.00 socre from the preivous model.  $R^2$ value of  0.84 means the model explains approximately 84% of the variance in cooking times.
+
+
 
 
 
