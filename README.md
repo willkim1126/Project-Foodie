@@ -1,6 +1,5 @@
-# Project Foodie
-Name: Junghwan Kim\
-PID: A16996831
+Junghwan Kim
+junghwk11@gmial.com
 
 ## Introduction
 Being a big food enthusiast, a large dataset of recipes sparked my curiosity in what how I can utilize the dataset and incorporate data science skills into creating something where I can deepen my food knowledge.
@@ -11,7 +10,9 @@ Being a big food enthusiast, a large dataset of recipes sparked my curiosity in 
 In this project I aim to answer the question of 'How do different recipe characteristics (e.g., ingredients, cooking time, and tags) impact their healthiness?'
 
 ### About Data 
-The dataset I'm looking is the recipes dataset from food.com, where it contains necessary information about each recipes. The dataset contains 83,782 recipes, each with 14 attributes detailing cooking time, ingredients, and nutritional information.
+The dataset that was used in this project was originally scraped from [food.com](https://www.food.com/) and was scraped by the awsome authors of the paper called [Generating Personalized Recipes from Historical User Preferences](https://cseweb.ucsd.edu/~jmcauley/pdfs/emnlp19c.pdf). 
+
+The recipe instruction dataset contains 83,782 recipes, each with 14 attributes detailing cooking time, ingredients, and nutritional information. The recipes interaction dataset contains over 200,000 reviews of recipes in the recipes dataset. 
 In this project, columns 'minutes', 'tags', 'nutrients', 'n_steps', 'steps', 'ingredients' were the main columns that were used to analyze the dataset. 
 
 | Column| Description| 
@@ -173,6 +174,8 @@ To incorporate machine learning, the next steps are related to building a predic
 ### Problem Identification 
 The goal of this prediciton problem is to predict number of minutes it takes to make a recipe based on the given ingredients and tags. Based on the ingredients and tags give, the model aims to predict the complexity of the recipe. In order to quantify the defintion of 'complexity' here, column 'minutes' was used as it is intuitive to say the longer it takes, more complex the recipe is. Looking at the number of ingredients, we can say that more ingredients mean its more complex to cook, affecting the response variable, minutes. Similarly, specfic tags can be related to recipe being more or less complex. 
 
+### Evaluation Metric 
+For model evaluation, Mean Square Error and R^2^ to evalute the model. Since the regression model predicts a continuous variable of cooking time, MSE would be a useful metric as it works well with for optimization in machine learning models. It will also penalize larger errors more heavily. R^2^ would also be a useful metric as it explains varaince in the data and also scale-independent. 
 
 ## Base Model 
 Again, the dataset needs further cleaning and preprocessing in order for model to achieve its intended purpose. 
@@ -198,9 +201,9 @@ All the effort to reduce dimensionality of the data was worth it as the training
 - **Mean Squared Error:** 67260671.69
 - **R² Score:** -0.00
 
-... Based on the evaluation metric, we can we see that our model performing horribly. Very horribly. The MSE suggest that the model has extremely large prediction errors. The RMSE is around 8201 minutes based on MSE,  which is an enormous error for predicting cooking time. The $R^2$ score of 0.00 indicates that the model performs no better than simply predicting the mean value for all samples. Moreover, it's negative, telling us that it's worse than just predicitng mean. Ultimately, this suggests the model has failed to capture any meaningful relationship between features and target.
+Based on the evaluation metric, we can we see that our model performing horribly. Very horribly. The MSE suggest that the model has extremely large prediction errors. The RMSE is around 8201 minutes based on MSE,  which is an enormous error for predicting cooking time. The R^2^ score of 0.00 indicates that the model performs no better than simply predicting the mean value for all samples. Moreover, it's negative, telling us that it's worse than just predicitng mean. Ultimately, this suggests the model has failed to capture any meaningful relationship between features and target.
 
-## Final Model 
+## Improved Model 
 
 ### Exploring the 'minutes' column
 One of the causes of the poor performance of the model might be due to extreme outliers in the 'minutes' column. Further analysis on the data is much needed.
@@ -228,13 +231,10 @@ Looking at the MSE, we can see that it is significantly lower than the orginial 
 
 
 ## A new approach to the Final Model 
-**Though I was able to achieve a much better evalutation metrics after I got rid of outliers, I wasn't sure if that was enough to get credits for step7. So below is my attempt to create a final model including two new features of 'calories' and 'n_steps'. I was not able to finish the final model and was not able to run it. However, I hope the below show some framework and approach I was taking to achieve the final model.** 
 
 ### Two New Features 
 The new features or variables in the dataset I thought it would better the base model was: calories and n_steps. If the meal had more calories, it could mean that it will have more ingredients or have bigger portion size, leading to higher complexity of recipe, affecting the minutes. In contrast, less calories might mean less ingredients and less portion size, leading to lower complexity of recipe, affecting the minutes. Number of steps is very intuitive since it will directly influence the complexity of the recipe. 
-
-### Limitations
-Unfortunately, I was not able to run the final model without my laptop crashing. There's definitely a way to make this model work, but with the time constraint, I was not able to fit the model properly on time. 
+ 
 
 ## Fairness Analysis
 Again, due to time constraint I was not able to run the model again and actually run the permuatation test. My approach was to divide into two groups, based on the number of steps, group X being recipes with less than 10 steps, and group y being recipes with more than 10 steps.
