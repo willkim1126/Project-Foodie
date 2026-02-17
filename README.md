@@ -2,7 +2,7 @@ Junghwan Kim\
 junghwk11@gmail.com
 
 ## Introduction
-Being a big food enthusiast, a large dataset of recipes sparked my curiosity in what how I can utilize the dataset and incorporate data science skills into creating something where I can deepen my food knowledge.
+Being a big food enthusiast, a large dataset of recipes sparked my curiosity in how I can utilize the dataset and incorporate data science skills into creating something where I can deepen my food knowledge.
 
 'You are what you eat'. By analyzing the dataset that contains over 83,000 data, I aim to understand 'food' in a higher dimension. 
 
@@ -10,7 +10,7 @@ Being a big food enthusiast, a large dataset of recipes sparked my curiosity in 
 In this project I aim to answer the question of 'How do different recipe characteristics (e.g., ingredients, cooking time, and tags) impact their healthiness?'
 
 ### About Data 
-The dataset that was used in this project was originally scraped from [food.com](https://www.food.com/) and was scraped by the awsome authors of the paper called [Generating Personalized Recipes from Historical User Preferences](https://cseweb.ucsd.edu/~jmcauley/pdfs/emnlp19c.pdf). 
+The dataset that was used in this project was originally scraped from [food.com](https://www.food.com/) and was scraped by the awesome authors of the paper called [Generating Personalized Recipes from Historical User Preferences](https://cseweb.ucsd.edu/~jmcauley/pdfs/emnlp19c.pdf). 
 
 The recipe instruction dataset contains 83,782 recipes, each with 14 attributes detailing cooking time, ingredients, and nutritional information. The recipes interaction dataset contains over 200,000 reviews of recipes in the recipes dataset. 
 In this project, columns 'minutes', 'tags', 'nutrients', 'n_steps', 'steps', 'ingredients' were the main columns that were used to analyze the dataset. 
@@ -28,14 +28,14 @@ In this project, columns 'minutes', 'tags', 'nutrients', 'n_steps', 'steps', 'in
 ## Data Cleaning and Exploratory Data Analysis 
 
 ### Data Cleaning
-The provided dataset for the recipes were in two separate datasets: recipe datasets that contains recipes and ratings dataset that contains reviews and ratings submitted for the recipes in the other dataset. 
+The provided data for the recipes were in two separate datasets: a recipe dataset that contains recipes and a ratings dataset that contains reviews and ratings submitted for the recipes in the other dataset. 
 
-Therefore, merging the two dataset was necessary. A left merge was used to ensure that all recipes remain in the dataset, even if they have no reviews. Then, In the merged dataset, fill all ratings of 0 with np.nan. After filling the 0s with np.nan, average rating per recipe was found, in Series, for creating a new column called 'average_rating'.
+Therefore, merging the two datasets was necessary. A left merge was used to ensure that all recipes remain in the dataset, even if they have no reviews. Then, in the merged dataset, all ratings of 0 were filled with np.nan. After filling the 0s with np.nan, the average rating per recipe was found in a Series to create a new column called 'average_rating'.
 
 It is also important to note that further data cleaning is done in the later part of the project as more analysis is done.
 
 ### Univariate Analysis
-Starting the EDA, univariate analysis done first to understand the dataset better. 
+Starting the EDA, univariate analysis was done first to understand the dataset better. 
 
 ### Distribution of Average Rating 
 
@@ -59,7 +59,7 @@ Starting the EDA, univariate analysis done first to understand the dataset bette
 ## Assessment of Missingness
 
 ### NMAR Analysis 
-From the dataset, we can see that the column with the most np.nan is the column 'average_rating'. When merging the two orignal datasets, it is very plausible that the not all recipes had any ratings from the ratings dataset, leading to missing values at 'average_rating' column. 
+From the dataset, we can see that the column with the most np.nan is 'average_rating'. When merging the two original datasets, it is very plausible that not all recipes had any ratings from the ratings dataset, leading to missing values in the 'average_rating' column. 
 
 ### Missingness Dependency
 ## Permutation Test Analysis for Recipe Description Missingness
@@ -84,33 +84,33 @@ These findings suggest that missing descriptions are associated with recipe comp
 
 
 ## Hypothesis Testing 
-Moving deeper into understnding analyzing the recipe dataset, focus on nutrients of the recipes and figure out what constitute what type of food is healthy is important.
+Moving deeper into understanding and analyzing the recipe dataset, focusing on recipe nutrients and figuring out what constitutes healthy food is important.
 
-### Reseaarch Question
+### Research Question
 What types of recipes tend to be healthier?
 
 ### Key Definitions in Research Question 
-Below is the defintions of the keywords 'types' and 'healthier' in the research question in terms of quantifiable, representable metrics in the dataset. \
+Below are the definitions of the keywords 'types' and 'healthier' in the research question in terms of quantifiable, representable metrics in the dataset. \
 \
-'Types': Each recipe has a column called 'tags' which consists a list of tags realted to the recipe. The 'tags' will be the 'type' of recipes. Each recipes can have multiple types. \
+'Types': Each recipe has a column called 'tags' which consists of a list of tags related to the recipe. The 'tags' will be the 'type' of recipes. Each recipe can have multiple types. \
 \
-'Healthier': Determine whether a recipe is healthy or not by looking at the column 'nutrition' which consist nutrition information in the form [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)]. Specfically, consider protein (PDV) and sugar (PDV). If protein (PDV) is greater or equal to 20, sugar (PDV) is lower than 5, and carbohydrate (PDV) is less than 26. 
+'Healthier': Determine whether a recipe is healthy or not by looking at the column 'nutrition', which consists of nutrition information in the form [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)]. Specifically, consider protein (PDV), sugar (PDV), and carbohydrates (PDV). If protein (PDV) is greater than or equal to 20, sugar (PDV) is lower than 5, and carbohydrates (PDV) are less than 26. 
 
 ### Null Hypothesis
-The types of recips does not affect its healthiness. Protein, sugar, and carbohydrate percent daily values are independent of recipe types.
+The type of recipe does not affect its healthiness. Protein, sugar, and carbohydrate percent daily values are independent of recipe types.
 
 ### Alternative Hypothesis
-The type of recipe affects its healtiness. Protein, sugar and carbohydrate percent daily values depend on recipe types.
+The type of recipe affects its healthiness. Protein, sugar, and carbohydrate percent daily values depend on recipe types.
 
-### Data Prepocessing
-In order to answer the research question, more data cleaning is required. the column 'nutrition' and 'tags' are both in string. However, they both have brackets [] inside, so changing to appropriate type of list is necessary before the s. Morever, we will dive the column 'nutrients' to different nutrient information.
+### Data Preprocessing
+In order to answer the research question, more data cleaning is required. The columns 'nutrition' and 'tags' are both strings. However, they both have brackets [] inside, so changing them to the appropriate list type is necessary before testing. Moreover, we will divide the column 'nutrients' into different nutrient fields.
 
 
 ### Understanding the Data More
-We need to further understand the dataset in order properly execture hypothesis testing. Through data wrangling, unique list of ingredients and tags in the dataset was obtained. This is will help hypothesis testing as filtering through 'healthy' recipe is needed. From this, there was 4913 healthy recipes in the dataset. 
+We need to further understand the dataset in order to properly execute hypothesis testing. Through data wrangling, a unique list of ingredients and tags in the dataset was obtained. This will help hypothesis testing as filtering through 'healthy' recipes is needed. From this, there were 4913 healthy recipes in the dataset. 
 
-### Determing the Type of Test
-Since we are dealing with discrete, unpaired, categorical data type 'tags', we will use chi-square test. However, there's 549 unique tags in the dataset. Perforiming indiviual hypothesis tests for each tage will not only take long and inefficient, it will increase the risk of Type 1 error. 
+### Determining the Type of Test
+Since we are dealing with the discrete, unpaired, categorical data type 'tags', we will use a chi-square test. However, there are 549 unique tags in the dataset. Performing individual hypothesis tests for each tag would not only be time-consuming and inefficient, but it would also increase the risk of Type 1 error. 
 
 ### Recipe Tag Analysis: Preparing for Chi-Square Testing
 
@@ -169,17 +169,17 @@ In other words out of 549 unique recipe tags, the hypothesis tests identified 25
 
 
 ## Framing a Prediction Problem 
-To incorporate machine learning, the next steps are related to building a predicitve model based on the recipe dataset.
+To incorporate machine learning, the next steps are related to building a predictive model based on the recipe dataset.
 
 ### Problem Identification 
-The goal of this prediciton problem is to predict number of minutes it takes to make a recipe based on the given ingredients and tags. Based on the ingredients and tags give, the model aims to predict the complexity of the recipe. In order to quantify the defintion of 'complexity' here, column 'minutes' was used as it is intuitive to say the longer it takes, more complex the recipe is. Looking at the number of ingredients, we can say that more ingredients mean its more complex to cook, affecting the response variable, minutes. Similarly, specfic tags can be related to recipe being more or less complex. 
+The goal of this prediction problem is to predict the number of minutes it takes to make a recipe based on the given ingredients and tags. Based on the given ingredients and tags, the model aims to predict recipe complexity. In order to quantify the definition of 'complexity' here, the column 'minutes' was used, since it is intuitive to say that the longer it takes, the more complex the recipe is. Looking at the number of ingredients, we can say that more ingredients mean it is more complex to cook, affecting the response variable, minutes. Similarly, specific tags can be related to a recipe being more or less complex. 
 
 ### Evaluation Metric 
-For model evaluation, Mean Square Error and R^2^ to evalute the model. Since the regression model predicts a continuous variable of cooking time, MSE would be a useful metric as it works well with for optimization in machine learning models. It will also penalize larger errors more heavily. R^2^ would also be a useful metric as it explains varaince in the data and also scale-independent. 
+For model evaluation, Mean Squared Error and $R^2$ were used to evaluate the model. Since the regression model predicts a continuous variable of cooking time, MSE is a useful metric because it works well for optimization in machine learning models. It also penalizes larger errors more heavily. $R^2$ is also useful because it explains variance in the data and is scale-independent. 
 
 ## Base Model 
-Again, the dataset needs further cleaning and preprocessing in order for model to achieve its intended purpose. 
-First, only relvant columns in recipes were used to lower the memory used in the cpu (since the model will blow up my laptop if I run the whole, raw dataset). The next few sections will provide more details in data preprocessing.
+Again, the dataset needs further cleaning and preprocessing in order for the model to achieve its intended purpose. 
+First, only relevant columns in recipes were used to lower memory usage on the CPU (since the model may overwhelm my laptop if I run the whole raw dataset). The next few sections provide more details on data preprocessing.
 
 ### One-hot Encoding for 'Ingredients' and 'Tags' Columns
 Here, we use MultiLabelBinarizer to perform one-hot encoding on the ‘ingredients’ and ‘tags’ columns. The `sparse_output=True` parameter creates a sparse matrix, which is memory-efficient for high-dimensional data with many zero values.
@@ -188,20 +188,20 @@ Here, we use MultiLabelBinarizer to perform one-hot encoding on the ‘ingredien
 After, the encoded ingredients and tags are combined into a single sparse DataFrame. Using sparse representations significantly reduces memory usage for high-dimensional, sparse data.
 
 ### Pipeline
-The main pipe line of the model is as followed:
+The main pipeline of the model is as follows:
 - SelectKBest chooses the top 1000 features based on mutual information with the target variable. This reduces dimensionality while retaining the most relevant features.
 - Principal Component Analysis (PCA) further reduces the dimensionality to 100 components. PCA finds the directions of maximum variance in the data, allowing us to represent the data with fewer dimensions while retaining most of the information.
 - StandardScaler standardizes the features by removing the mean and scaling to unit variance. This is important for many machine learning algorithms, including Random Forest, to ensure all features are on a similar scale.
 - The Random Forest Regressor is used for prediction. It’s an ensemble of decision trees, which is well-suited for handling non-linear relationships and interactions between features.
 
 ### Fitting
-All the effort to reduce dimensionality of the data was worth it as the training was finished in around 55 minutes. The onehot encoding of over 10,000 uniqe ingredients was why it was necessary to reduce dimensionality. 
+All the effort to reduce dimensionality of the data was worth it as training finished in around 55 minutes. The one-hot encoding of over 10,000 unique ingredients is why it was necessary to reduce dimensionality. 
 
 ### Performance
 - **Mean Squared Error:** 67260671.69
 - **R² Score:** -0.00
 
-Based on the evaluation metric, we can we see that our model performing horribly. Very horribly. The MSE suggest that the model has extremely large prediction errors. The RMSE is around 8201 minutes based on MSE,  which is an enormous error for predicting cooking time. The R^2^ score of 0.00 indicates that the model performs no better than simply predicting the mean value for all samples. Moreover, it's negative, telling us that it's worse than just predicitng mean. Ultimately, this suggests the model has failed to capture any meaningful relationship between features and target.
+Based on the evaluation metrics, we can see that our model is performing horribly. The MSE suggests that the model has extremely large prediction errors. The RMSE is around 8201 minutes based on MSE, which is an enormous error for predicting cooking time. The $R^2$ score of 0.00 indicates that the model performs no better than simply predicting the mean value for all samples. Moreover, it's negative, telling us that it's worse than just predicting the mean. Ultimately, this suggests the model failed to capture any meaningful relationship between features and target.
 
 ## Improved Model 
 
@@ -227,14 +227,14 @@ After removing the outliers from the dataset that is fed through the model, the 
 - **Mean Squared Error:** 125.55
 - **R² Score:** 0.84
 
-Looking at the MSE, we can see that it is significantly lower than the orginial metric. The square root (RMSE) would be about 11.2 minutes, which is a reasonable error margin for predicting cooking times. Moreover, the $R^2$ is much better than the -0.00 socre from the preivous result. $R^2$ value of  0.84 means the model explains approximately 84% of the variance in cooking times.
+Looking at the MSE, we can see that it is significantly lower than the original metric. The square root (RMSE) is about 11.2 minutes, which is a reasonable error margin for predicting cooking times. Moreover, the $R^2$ is much better than the -0.00 score from the previous result. An $R^2$ value of 0.84 means the model explains approximately 84% of the variance in cooking times.
 
 
 ## A new approach to the Final Model 
 
 ### Two New Features 
-The new features or variables in the dataset I thought it would better the base model was: calories and n_steps. If the meal had more calories, it could mean that it will have more ingredients or have bigger portion size, leading to higher complexity of recipe, affecting the minutes. In contrast, less calories might mean less ingredients and less portion size, leading to lower complexity of recipe, affecting the minutes. Number of steps is very intuitive since it will directly influence the complexity of the recipe. 
+The new features or variables in the dataset that I thought would improve the base model were calories and n_steps. If a meal has more calories, it could mean that it has more ingredients or a bigger portion size, leading to higher recipe complexity and affecting minutes. In contrast, fewer calories might mean fewer ingredients and a smaller portion size, leading to lower recipe complexity and affecting minutes. The number of steps is very intuitive since it directly influences recipe complexity. 
  
 
 ## Fairness Analysis
-Again, due to time constraint I was not able to run the model again and actually run the permuatation test. My approach was to divide into two groups, based on the number of steps, group X being recipes with less than 10 steps, and group y being recipes with more than 10 steps.
+Again, due to time constraints, I was not able to run the model again and actually run the permutation test. My approach was to divide recipes into two groups based on the number of steps: group X with recipes that have fewer than 10 steps, and group Y with recipes that have more than 10 steps.
